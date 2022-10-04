@@ -1,0 +1,5 @@
+beer	3.50	23/10/2025	Normal	
+beef	10.00	19/10/2022	Normal	
+chicken	8.00	20/12/2022	Normal	
+water	1.50	30/01/2025	Normal	
+apple	1.35	06/12/2022	Normal	
