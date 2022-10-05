@@ -1,6 +1,3 @@
-# Kyaw Zin Tun @ Kyaw Htet Thu
-# TP069492
-
 #''
 # Logos and Menu parts 
 
