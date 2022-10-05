@@ -1,4 +1,3 @@
-ben Beef    20
-tom ice-cream   5.00
-ali orange,Apple    10.00
-jassar  pizza   25.00
+tom	milo,rum	24.0	
+ben	vodka,rum,gin	35.1	
+jassar	rum,gin	23.1	

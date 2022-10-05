@@ -1,4 +1,7 @@
-'''
+# Kyaw Zin Tun @ Kyaw Htet Thu
+# TP069492
+
+#''
 # Logos and Menu parts 
 
 def logo(): # Logo
@@ -76,7 +79,7 @@ def user_menu_logo(): # Customer Menu Logo
 
 def admin_choice(): # Admin Menu
     while True:
-        admin_menu_choice = int(input("\nShow Admin Menu with (0).\nChoose one function form Admin Menu: "))
+        admin_menu_choice = int(input("\nShow Admin Menu with (0) or logout with (8).\nChoose one function form Admin Menu: "))
         if admin_menu_choice < 0 or admin_menu_choice > 8: # Check Error Input and loop back
             print("Input Error, Check input again.")
             continue
@@ -129,10 +132,10 @@ def update_groceries(): # Update Groceries (1)
         #print("Item Number: " + groc_num)
         
         
-        groc_name = input("Item Name: ")
-        groc_price = input("Price, RM : ")
-        groc_exp_date = input("Exp date, DD/MM/YYYY : ")
-        groc_specification = input("Specification; Premium or Normal: ")
+        groc_name = input("Item Name: ").lower()
+        groc_price = input("Price, RM : ").lower()
+        groc_exp_date = input("Exp date, DD/MM/YYYY : ").lower()
+        groc_specification = input("Specification; Premium or Normal: ").lower()
         choice = input("\nConfirm or Redo? c or r: ")
         if choice == "r":
             continue
@@ -160,10 +163,10 @@ def update_groceries(): # Update Groceries (1)
         else:
             print("Invalid Input.")
             break
-'''
+
 def view_all_groceries(): # View all groceries (2)
     print("\n+++++ View All Uploded +++++\n")
-    print("Item:\tPrice:\tExp Date:\tSpecification:")
+    print("Item:\tPrice:\n")
     with open("groceries.txt","r") as groceries_view:
         for line in groceries_view:
             line = line.rstrip()
@@ -172,75 +175,62 @@ def view_all_groceries(): # View all groceries (2)
 
 def replace_groceries(): # Modify the groceries (3)
     print("\n+++++ Replace Groceries +++++\n")
+    view_all_groceries() # View all Groceries Function 
     while True:
-        view_all_groceries()
-        change_groceries = input("\nWhich Item Do you want to change?: ")
-        with open('groceries.txt','r') as rpg:
-            rpg_filecheck = rpg.readlines()
-            status = True
-            for replace_filecheck in rpg_filecheck:
-                rpg_name_check = replace_filecheck.split('\t')[0]
-                if rpg_name_check == change_groceries:
-                    print("Haha, I'm in danger.")
-                    return True
-                else:
-                    status = False
-            if status == False:
-                print("Um hum, nonono")
-            rpg.close()
-        continue
-replace_groceries()
-
-    #print("1) Name.")
-    #print("2) Price.")
-    #print("3) Exp Date.")
-    #print("4) Specifaction.")
-    
-'''
-    change_groceries = input("\nDo you want to change Groceries Details? y or n: ")
-    if change_groceries == "y":
-        change_line_num = int(input("Input line number to change: "))
-        with open("groceries.txt","r") as rp:
-            change_line = rp.readlines()
-            print(change_line)
-            ac = int(change_line_num - 1)
-            print(change_line[ac])
-            while True:
-                rep_groc_num = str(change_line_num)
-                rep_groc_name = input("Item Name: ")
-                rep_groc_price = input("Price, RM : ")
-                rep_groc_exp_date = input("Exp date, DD/MM/YYYY : ")
-                rep_groc_specification = input("Specification; Premium or Normal: ")
-                choice = input("\nConfirm or Redo? c or r: ")
-                if choice == "r":
+        with open('groceries.txt','r+') as rpg:
+            rpg_filecheck = rpg.read()
+            rpg_name_price = input("\nChange Item Name or Price? n, p: ") # 
+            original_groceries = input("\nWhich Item Do you want to change?: ") # 
+            if rpg_name_price == "n": # replace name 
+                change_item_name = input("Change Item: ").lower()
+                namechange = rpg_filecheck.replace(original_groceries,change_item_name)
+                rpg.close()
+                with open('groceries.txt','w') as rpg:
+                    rpg.write(namechange)
+                rpg.close()
+                view_all_groceries()
+                rpg_choice = input("Change Again? y or n: ").lower
+                if rpg_choice == "y":
                     continue
-                elif choice == "c":
-                    update_groceries_list = str(rep_groc_num + "\t" + rep_groc_name + "\t" + rep_groc_price + "\t" + rep_groc_exp_date + "\t" + rep_groc_specification + "\n")
-                    print(update_groceries_list)
-                    change_line[ac] = update_groceries_list
-                    print("\n" + str(change_line))
-                    view_all_groceries()
-                    choice = input("Add more or Exit? a and e: ")
-                    if choice == "a":
-                        # line_break()
-                        continue
-                    else:
-                        # line_break()
-                        break
                 else:
-                    print("Invalid Input.")
                     break
-            rp.close()          
-        print("modify")  
-    elif change_groceries == "n":
-        print("No")
-    else:
-        print("invalid input")
+            elif rpg_name_price == "p": # replace price
+                with open('groceries.txt','r+') as rpg:
+                    for anything in rpg:
+                        if anything.startswith(original_groceries) :
+                            anything = anything.split()
+                            anyname = str(anything[1])
+                            print(anyname)
+                            new_price = input("New Price: ")
+                            change_price = rpg_filecheck.replace(anyname,new_price)
+                            with open('groceries.txt','w') as rpg:
+                                rpg.write(change_price)
+                rpg.close()
+                view_all_groceries()
+                continue
+                
+            else:
+                print("Invalid ")
+                continue
 
-    '''
-''' 
+
 def delete_groceries(): 
     print("Delete Groceries.")
+    del_groc_name = input("Delete Groc Name: ")
+    with open('groceries.txt','r') as groc_del:
+         for del_name in groc_del:
+            old_groc_del = del_name
+    groc_del.close()
+
+    with open('groceries.txt','r') as groc_del:
+        replace_groc = ""
+        rep_groc = groc_del.read()
+        rep_grocies = rep_groc.replace(old_groc_del,replace_groc)
+    with open('groceries.txt','w') as groc_del:
+        groc_del.write(rep_grocies)
+        print(rep_grocies)
+    groc_del.close()
+
 
 def specific_groceries_detail(): # Find Specific Groceries Detail
     groc_name = str(input("Input Groceries Name: "))
@@ -380,36 +370,37 @@ def user_panel(username):
         else:
             user_menu()
             continue
-# '''
-'''
+
 def cus_order_payment(): # Customer Order and Payment
     view_all_groceries()
-    #line_break()
     total_cost = 0
-    while True:
-        with open('groceries.txt','r') as gw:
-            order_item = input("Item: ").lower()
-            vag = gw.readlines()
-            status = True
-            for gv in vag:
-                g_item = gv.split('\t')[0].strip()
-                if g_item == order_item:
-                    g_price = gv.split('\t')[1].strip()
-                    gw.close()
-                    print(g_price)
-                    total_cost += float(g_price)
-                    print(float(total_cost))
-                    stop_groc = input("Add item or Exit? a or e: ")
-                    if stop_groc == "e":
-                        break
-                    else:
-                        continue
-                else:
-                    gw.close()
-                    status = False
-            if status == False:
-                print("This item is not available.")
-            gw.close()
+    cus_total_cost = []
+    num_groceries = []
+    total_num_groc = int(input("How many groceries do you want to buy?: "))
+    for i in range(total_num_groc):
+        order_item = str(input("Input Item: "))
+        num_groceries.append(order_item)
+        with open('groceries.txt','r') as cus_order_items:
+            for line in cus_order_items:
+                if line.startswith(order_item):
+                    cost = line.split()
+                    choosen_cost = float(cost[1])
+                    cus_total_cost.append(choosen_cost)
+                    total_cost = sum(cus_total_cost)
+            cus_order_items.close()
+        print(total_cost)
+    order_item_list = []
+    customer_name = input("username: ")
+    order_item_names = str(','.join(num_groceries))
+    order_item_list.append(customer_name)
+    order_item_list.append(order_item_names)
+    order_item_list.append(str(total_cost))
+    with open('orders.txt','a') as cus_order_items:
+        for order_data in order_item_list:    
+            cus_order_items.write(order_data)
+            cus_order_items.write('\t')
+        cus_order_items.write("\n")
+    cus_order_items.close()
 
 def view_own_order(username):
     with open('orders.txt','r') as voo:
@@ -486,10 +477,8 @@ while True:
         #-----------
         
         #----------
-        
-
 # ------------------------------------------------------------------------------------------------------
     else: # Registered Login
         print("+++++ Exit System ++++++")
         break
-'''
+#'''
