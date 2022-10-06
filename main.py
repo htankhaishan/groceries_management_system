@@ -1,4 +1,7 @@
-#''
+# Kyaw Zin Tun @ Kyaw Htet Thu
+# TP069492
+
+# ------------------------------------------------------------------------------------------------------
 # Logos and Menu parts 
 
 def logo(): # Logo
@@ -10,7 +13,7 @@ def logo(): # Logo
     print("#+#    #+# #+#       #+# #+#    #+#     ")
     print("########  ###       ###  ########       \n")
 
-def line_break():
+def line_break(): # Line Break Function
     print("____________________________________")
 
 def main_menu(): # Main Info
@@ -35,7 +38,7 @@ def admin_menu_logo(): # Admin Main Logo
     print("|   |/ . || ' ' || || ' | |  _/<_> || ' |/ ._>| |")
     print("|_|_|\___||_|_|_||_||_|_| |_|  <___||_|_|\___.|_|")
 
-def admin_menu():
+def admin_menu(): # Admin Main Menu
     line_break()
     print("\n1) Upload Groceries.")
     print("2) View All Uploaded.")
@@ -48,7 +51,7 @@ def admin_menu():
     print("0) To open Admin Menu again.")
     line_break()
 
-def new_register_logo():
+def new_register_logo(): # New User Register
     line_break()
     print(" _ _               _ _                 ___            _        _            ")           
     print("| \ | ___  _ _ _  | | | ___ ___  _ _  | . \ ___  ___ <_> ___ _| |_ ___  _ _ ")
@@ -56,7 +59,7 @@ def new_register_logo():
     print("|_\_|\___.|__/_/  `___'/__/\___.|_|   |_\_ \___.\_. ||_|/__/  |_| \___.|_|  ")
     print("                                                <___'                       ")
 
-def user_logo():
+def user_logo(): # Customer Login Logo
     line_break()
     print(" ___             _                          _              _      ")
     print("|  _> _ _  ___ _| |_ ___ ._ _ _  ___  _ _  | |   ___  ___ <_>._ _ ")
@@ -74,65 +77,87 @@ def user_menu_logo(): # Customer Menu Logo
 # ------------------------------------------------------------------------------------------------------
 # Admin Parts
 
+
+def admin_check(): # Admin Check
+    admin_username = str(input("Admin User Name: ")) # Admin User Name Input
+    admin_password = input("Admin Password: ") # Admin Password Input
+    with open("admin.txt","r") as check_admin:
+        for word in check_admin:
+            check_admin = word.rsplit()
+            if admin_username != check_admin[0] or admin_password != check_admin[1]: # Adimn username false and pass true               
+                print("\nInvalid Username or Password.\n")
+                line_break()
+                back = str(input("Try Again or Exit System? t or e: ")) 
+                if back == "t":
+                    continue # Loop back to Admin Login
+                else:
+                    break # Back to Main Menu Function.
+            elif admin_username == check_admin[0] and admin_password == check_admin[1]: # To Admin Main Menu
+                line_break()
+                print("Login Successfully.")
+                # --------------------------------------------------------------------------------------------
+                admin_menu_logo()
+                admin_menu() # Admin Panal Menu
+                admin_choice()
+
+
 def admin_choice(): # Admin Menu
     while True:
         admin_menu_choice = int(input("\nShow Admin Menu with (0) or logout with (8).\nChoose one function form Admin Menu: "))
         if admin_menu_choice < 0 or admin_menu_choice > 8: # Check Error Input and loop back
             print("Input Error, Check input again.")
+            line_break()
             continue
-        elif admin_menu_choice == 1: # Update Groceries Menu
+        elif admin_menu_choice == 1: # 1) Update Groceries Menu
             update_groceries()
+            line_break()
             continue
-        elif admin_menu_choice == 2: # View all Groceries Menu
+        elif admin_menu_choice == 2: # 2) View all Groceries Menu
             view_all_groceries()
+            line_break()
             continue
-        elif admin_menu_choice == 3: # Modify or Update Groceries 
+        elif admin_menu_choice == 3: # 3) Modify or Update Groceries 
             replace_groceries()
+            line_break()
             continue
             
-        elif admin_menu_choice == 4:
+        elif admin_menu_choice == 4: # 4) Delete Groceries 
             delete_groceries()
+            line_break()
             continue
 
-        elif admin_menu_choice == 5:
-            print("Search Specific Groceries Detail")
+        elif admin_menu_choice == 5: # 5) Search Specific Groceries Detail
             specific_groceries_detail()
+            line_break()
             continue
 
-        elif admin_menu_choice == 6:
-            print("View All Customers Orders")
+        elif admin_menu_choice == 6: # 6) View all Customers Orders
             view_all_cus_orders()
+            line_break()
             continue
 
-        elif admin_menu_choice == 7:
-            print("Search Order of Specific Customer")
+        elif admin_menu_choice == 7: # 7) Search Specific Customer's Order
             specific_cus_order()
+            line_break()
             continue
         
-        elif admin_menu_choice == 0:
+        elif admin_menu_choice == 0: # 0) Show Admin Menu
             admin_menu()
+            line_break()
             continue
 
         else:
-            print("Exit to Main Menu.")
+            print("\n+++++ Exit to Main Menu. +++++\n")
+            line_break()
             line_break()
             break 
+
 
 def update_groceries(): # Update Groceries (1)
     while True:
         print("\n+++++ Upload Groceries +++++\n")
-        
-        
-        #with open("groceries.txt",'r') as ga: # Check the total number of list in groceries.
-        #    groc_num = str(len(ga.readlines()) + 1)
-        #ga.close()
-        #print("Item Number: " + groc_num)
-        
-        
         groc_name = input("Item Name: ").lower()
         groc_price = input("Price, RM : ").lower()
-        groc_exp_date = input("Exp date, DD/MM/YYYY : ").lower()
-        groc_specification = input("Specification; Premium or Normal: ").lower()
         choice = input("\nConfirm or Redo? c or r: ")
         if choice == "r":
             continue
@@ -141,8 +166,6 @@ def update_groceries(): # Update Groceries (1)
             #update_groceries_list.append(groc_num)
             update_groceries_list.append(groc_name)
             update_groceries_list.append(groc_price)
-            update_groceries_list.append(groc_exp_date)
-            update_groceries_list.append(groc_specification)
             # x = str(update_groceries_list)
             with open("groceries.txt","a+") as groceries_add:
                 for ga in update_groceries_list:
@@ -161,6 +184,7 @@ def update_groceries(): # Update Groceries (1)
             print("Invalid Input.")
             break
 
+
 def view_all_groceries(): # View all groceries (2)
     print("\n+++++ View All Uploded +++++\n")
     print("Item:\tPrice:\n")
@@ -169,6 +193,7 @@ def view_all_groceries(): # View all groceries (2)
             line = line.rstrip()
             print(line)
         groceries_view.close()
+
 
 def replace_groceries(): # Modify the groceries (3)
     print("\n+++++ Replace Groceries +++++\n")
@@ -187,10 +212,6 @@ def replace_groceries(): # Modify the groceries (3)
                 rpg.close()
                 view_all_groceries()
                 rpg_choice = input("Change Again? y or n: ").lower
-                if rpg_choice == "y":
-                    continue
-                else:
-                    break
             elif rpg_name_price == "p": # replace price
                 with open('groceries.txt','r+') as rpg:
                     for anything in rpg:
@@ -204,19 +225,24 @@ def replace_groceries(): # Modify the groceries (3)
                                 rpg.write(change_price)
                 rpg.close()
                 view_all_groceries()
-                continue
-                
             else:
                 print("Invalid ")
-                continue
+        rpg_choice = input("Change Again? y or n: ")
+        if rpg_choice == "y":
+            continue
+        else:
+            break
 
 
-def delete_groceries(): 
+def delete_groceries(): # Delete Groceries (4)
     print("Delete Groceries.")
+    view_all_groceries()
+    line_break()
     del_groc_name = input("Delete Groc Name: ")
     with open('groceries.txt','r') as groc_del:
-         for del_name in groc_del:
-            old_groc_del = del_name
+        for del_name in groc_del:
+            if del_name.startswith(del_groc_name):
+                old_groc_del = del_name
     groc_del.close()
 
     with open('groceries.txt','r') as groc_del:
@@ -229,7 +255,8 @@ def delete_groceries():
     groc_del.close()
 
 
-def specific_groceries_detail(): # Find Specific Groceries Detail
+def specific_groceries_detail(): # Find Specific Groceries Detail (5)
+    print("\n+++++ Search Specific Groceries Detail +++++\n")
     groc_name = str(input("Input Groceries Name: "))
     with open('groceries.txt','r') as sgd:
         for x in sgd:
@@ -238,15 +265,29 @@ def specific_groceries_detail(): # Find Specific Groceries Detail
                 print(a)
         sgd.close()
 
-def view_all_cus_orders(): # Admin View All Customer's Orders
-    print("View All Customer Ordres.")
-    print("Name\t\t\tItems\t\t\tTotal\n")
+
+def view_all_cus_orders(): # Admin View All Customer's Orders (6)
+    print("\n+++++ View All Customers Orders +++++\n")
+    print("Name\tTotal\tItems\n")
     with open('orders.txt','r') as va:
         all_orders = va.read()
         print(all_orders)
         va.close()
 
-def user_menu(): # Customer Menu
+
+def specific_cus_order(): # Admin Could Search Orders with the name of Customers (7)
+    print("\n+++++ Search Order of Specific Customer +++++\n")
+    cus_name = str(input("Input Customer Name: "))
+    print("\nName\tTotal\tItems")
+    with open('orders.txt','r') as sco:
+        for x in sco:
+            a = x.rstrip()
+            if a.startswith(cus_name) :
+                print(a)
+        sco.close()
+
+
+def user_menu(): # Customer Menu (0)
     line_break()
     print("\n1) View All Groceries Details.")
     print("2) Order and Payment.")
@@ -256,27 +297,20 @@ def user_menu(): # Customer Menu
     print("0) To open Customer Menu again.")
     line_break() 
 
-def specific_cus_order(): # Admin Could Search Orders with the name of Customers
-    cus_name = str(input("Input Customer Name: "))
-    with open('orders.txt','r') as sco:
-        for x in sco:
-            a = x.rstrip()
-            if a.startswith(cus_name) :
-                print(a)
-        sco.close()
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # New User Registering
 
+
 def new_customer_register(): 
     while True:
         print("Please write Everything without space.")
-        new_username = input("Choose your Username: ") # New User Name Create
+        new_username = input("Choose your Username: ").lower() # New User Name Create
         new_password = input("Choose your password: ") # New User Password
         new_phone = input("Phone Number: ") # New User Phone Number
         new_mail = input("Email: ") # New User Email 
         new_bod = input("Date of Birth (DD/MM/YYYY): ") # New User Date of Birth
-        new_gender = input("Select your Gender; Male = m, Female = f : ") # New User Gender
+        new_gender = input("Select your Gender; Male = m, Female = f : ").lower() # New User Gender
         new_ID =  input("National ID: ")
         print("\n")
         new_user_choice = str(input("Please check the information again.\nSubmit,Change or Exit; s,c or e: "))            
@@ -314,10 +348,12 @@ def new_customer_register():
             continue
         continue
 
+
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 # Customer Part
 
-def user_choice(): # User Panel
+
+def user_choice(): # User Panel Login
     while True:
         username = str.lower(input("User Name: ")) # User Name
         password = str.lower(input("Password: ")) # Password
@@ -329,7 +365,8 @@ def user_choice(): # User Panel
                 pass_check = user_filecheck.split('\t')[1].strip()
                 if name_check == username and pass_check == password:
                     uc.close()
-                    print("success")
+                    line_break()
+                    print("Login Successful.")
                     user_panel(username)
                     return True
                 #user_panel()
@@ -338,38 +375,53 @@ def user_choice(): # User Panel
                     status = False
             if status == False:
                 print("Usename or Password Invalid.")
+            exit_cont = input("Retry or Exit? r or e: ")
+            if exit_cont == "e":
+                break
+            else:
+                continue
 
-def user_panel(username):
+
+def user_panel(username): # User Menu
+    user_menu_logo()
     user_menu()
     while True:
-        user_menu_choice = input("\nInput number: ")
-        if user_menu_choice == '1': 
-            print("View All Groceries Details.")
+        user_menu_choice = input("Show User Menu with (0) or logout with (5).\nInput number: ")
+        if user_menu_choice == '1':
+            line_break()
             view_all_groceries()
-            # line_break()
-            print("Input 0 to show User Menu: ")
+            line_break()
             continue
         elif user_menu_choice == '2':
-            print("Order and Payment.")
-            cus_order_payment()
+            line_break()
+            print("\n+++++ Order and Payment. +++++\n")
+            cus_order_payment(username)
+            line_break()
             continue
         elif user_menu_choice == '3':
-            print("View Order.")
+            line_break()
+            print("\n+++++ View Order. +++++\n")
             view_own_order(username)
+            line_break()
             continue
         elif user_menu_choice == '4':
-            print("View Personal Information.")
+            line_break()
+            print("\n+++++ View Personal Information. +++++\n")
             view_own_info(username)
+            line_break()
             continue
         elif user_menu_choice == '5':
-            print("Exit to Main Menu.")
+            line_break()
+            print("\n+++++ Exit to Main Menu. +++++\n")
             break
         else:
             user_menu()
             continue
 
-def cus_order_payment(): # Customer Order and Payment
+
+def cus_order_payment(username): # 2) Customer Order and Payment
     view_all_groceries()
+    line_break()
     total_cost = 0
     cus_total_cost = []
     num_groceries = []
@@ -385,21 +437,23 @@ def cus_order_payment(): # Customer Order and Payment
                     cus_total_cost.append(choosen_cost)
                     total_cost = sum(cus_total_cost)
             cus_order_items.close()
-        print(total_cost)
+    print("\nTotal Cost: "+ str(total_cost))
     order_item_list = []
-    customer_name = input("username: ")
     order_item_names = str(','.join(num_groceries))
-    order_item_list.append(customer_name)
-    order_item_list.append(order_item_names)
+    order_item_list.append(username)
     order_item_list.append(str(total_cost))
+    order_item_list.append(order_item_names)
     with open('orders.txt','a') as cus_order_items:
         for order_data in order_item_list:    
             cus_order_items.write(order_data)
             cus_order_items.write('\t')
         cus_order_items.write("\n")
     cus_order_items.close()
+    print("\n +++++ Payment Processing +++++ ")
+    print(" +++++ Payment Successful +++++ ")
 
-def view_own_order(username):
+
+def view_own_order(username): # 3) View Own's Order
     with open('orders.txt','r') as voo:
         for x in voo:
             a = x.strip()
@@ -407,17 +461,19 @@ def view_own_order(username):
                 print(a)
         voo.close()
 
-def view_own_info(username):
+
+def view_own_info(username): # 4) View Own's Info
     with open('users.txt','r') as voi:
-        print("Name\tPass\tPhone\tMail\tBOD\tGender\tID")
+        print("Name\tPass\tPhone\t\tMail\t\tBOD\t\tGender\tID")
         for x in voi:
             a = x.rstrip()
             if a.startswith(username):
                 print(a)
         voi.close()
-#------------------------------------------------------------------------------------------------------------------------------------------------------
-#------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------------------------
 # Main Program   
 
 
@@ -430,52 +486,23 @@ while True:
         line_break()
         continue
 
-# ------------------------------------------------------------------------------------------------------
-# Admin Panal
     elif main_login == 1: # Admin Login
         line_break()
         admin_login_logo()
-        admin_username = str(input("Admin User Name: ")) # Admin User Name
-        admin_password = input("Admin Password: ") # Admin Password
-        with open("admin.txt","r") as check_admin:
-            for word in check_admin:
-                check_admin = word.rsplit()
-                if admin_username != check_admin[0] or admin_password != check_admin[1]: # Adimn username false and pass true               
-                    print("\nInvalid Username or Password.\n")
-                    line_break()
-                    back = str(input("Try Again or Exit System? t or e: ")) 
-                    if back == "t":
-                        continue # Loop back to Admin Login
-                    else:
-                        break # Back to Main Menu Function.
-                elif admin_username == check_admin[0] and admin_password == check_admin[1]: # To Admin Main Menu
-                    line_break()
-                    print("Login Successfully.")
-                    # --------------------------------------------------------------------------------------------
-                    admin_menu_logo()
-                    admin_menu() # Admin Panal Menu
-                    admin_choice()
+        admin_check()
         continue
-                # check_admin.close()
                   
-# ------------------------------------------------------------------------------------------------------
-# New Customer Registeration 
-    elif main_login == 2:# New Customers
+    elif main_login == 2:# New Customers Registering
         line_break()
         new_register_logo()
         new_customer_register()
 
-# ------------------------------------------------------------------------------------------------------
-# Customer Login
     elif main_login == 3: # Register Customer Login
         line_break()
+        user_logo()
         user_choice()
-    # line_break()
-        #-----------
+        line_break()
         
-        #----------
-# ------------------------------------------------------------------------------------------------------
     else: # Registered Login
         print("+++++ Exit System ++++++")
         break
-#'''
