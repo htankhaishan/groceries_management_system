@@ -1,6 +1,5 @@
-# Kyaw Zin Tun @ Kyaw Htet Thu
-# TP069492
-
+# Python_groceries_management_system
+# Simple Python
 # ------------------------------------------------------------------------------------------------------
 # Logos and Menu parts 
 
